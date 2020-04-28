@@ -10,6 +10,8 @@ load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
 bot = commands.Bot(command_prefix='/i ')
+client = discord.Client()
+
 
 
 @bot.event
@@ -52,5 +54,19 @@ async def hooker(ctx):
 @bot.command(name='who_is_a_good_boy', help='Returns who is a good boy.')
 async def who_is_a_good_boi(ctx):
     await ctx.send('*barks happily*')
+
+
+@client.event
+async def on_message(message):
+    profamity_list = ['heck', 'darn', 'poop', 'frick', 'stupidhead']
+    there_are_bad_words = False
+
+    for bad_word in profamity_list:
+        if bad_word in message.content:
+            there_are_bad_words = True
+            break
+
+    if there_are_bad_words:
+        await message.channel.send('Watch your profamity!')
 
 bot.run(TOKEN)
